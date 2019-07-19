@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  webserver:
+    image: nginx:1.17
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./infrastructure/nginx:/etc/nginx/conf.d/
+      - ./arquivei:/app
+    depends_on:
+      - php-fpm
+      - db
+
+  php-fpm:
+    image: php:7.3-fpm
+    ports:
+      - '9000'
+    volumes:
+      - ./arquivei:/app
+
+  composer:
+    image: composer
+    command: composer install
+    volumes:
+      - ./arquivei:/app
+    environment:
+      - COMPOSER_HOME=${COMPOSER_HOME}
+
+  db:
+    image: mysql:5.7
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}

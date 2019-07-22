@@ -55,6 +55,8 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
+    
+    'arquivei_url' => env('ARQUIVEI_URL', 'https://apiuat.arquivei.com.br/v1/nfe/received'),
 
     /*
     |--------------------------------------------------------------------------
@@ -163,14 +165,10 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Package Service Providers...
-         */
-
-        /*
          * Application Service Providers...
          */
         App\Providers\RouteServiceProvider::class,
-
+        App\Providers\ArquiveiServiceProvider::class,
     ],
 
     /*

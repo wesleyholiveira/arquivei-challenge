@@ -13,11 +13,26 @@ services:
       - db
 
   php-fpm:
-    image: php:7.3-fpm
+    image: php-fpm
+    build: .
     ports:
       - '9000'
     volumes:
       - ./arquivei:/app
+    environment:
+      - DB_USERNAME=root
+      - DB_DATABASE=arquivei
+      - DB_PASSWORD=123mudar
+    depends_on:
+      - db
+
+  artisan:
+    image: php-fpm
+    command: php artisan migrate
+    volumes:
+      - ./arquivei:/app
+    depends_on:
+      - db
 
   composer:
     image: composer
@@ -25,7 +40,7 @@ services:
     volumes:
       - ./arquivei:/app
     environment:
-      - COMPOSER_HOME=${COMPOSER_HOME}
+      - COMPOSER_HOME=/app
 
   db:
     image: mysql:5.7
@@ -34,4 +49,5 @@ services:
     volumes:
       - ./data:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=arquivei
+      - MYSQL_ROOT_PASSWORD=123mudar

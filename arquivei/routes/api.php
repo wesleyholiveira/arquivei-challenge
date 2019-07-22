@@ -13,3 +13,5 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('/nfe/{accessKey}', 'ApiController@get');
+Route::post('/nfe/feed', 'ApiController@feed');

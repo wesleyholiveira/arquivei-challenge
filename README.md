@@ -1,4 +1,4 @@
-#DISCLAIMER
+# DISCLAIMER
 O projeto foi construido utilizando as seguintes tecnologias e conceitos:
 * Arquitetura em Camadas
 * Desacoplamento
@@ -10,7 +10,7 @@ O projeto foi construido utilizando as seguintes tecnologias e conceitos:
 
 
 # CONFIGURAÇÕES
-## AMBIENTE
+### AMBIENTE
 Para rodar o projeto é bem simples e fácil, basta rodar os dois seguintes comandos:
 ```
 docker-compose build
@@ -23,15 +23,21 @@ O arquivo **.env.sample** na raiz do projeto contem as configurações padrões 
 ## APLICAÇÃO
 Ainda na raiz do projeto, no arquivo **.env**, deve-se preencher os campos **API_KEY** e **API_ID** para ter acesso a API da Arquivei.
 
+Adicionei também a possibilidade de se configurar a URL do serviço da Arquivei e os parâmetros da requisição, basta acessar o seguinte caminho: **arquivei-challenge/arquivei/config/app.php**, onde na linha *59* até a linha *67* é a seção reservada para tal configuração.
+
 ## PROJETO
 O projeto foi desenvolvido de tal forma que isola-se a camada de domínio do usuário, evitando assim que acesse diretamente o domínio. As informações de domínio apenas são acessas através de serviços.
 
-Sendo assim foram criados dois *endpoints* para interagir com aplicação e serviço da Arquivei, são eles:
+Sendo assim foram criados dois **endpoints** para interagir com aplicação e serviço da Arquivei, são eles:
 ```
 GET /api/nfe/{accessKey}
 POST /api/nfe/feed
 ```
 
+Ainda sobre a estrutura do projeto, dentro de **arquivei** fica o web app com **Laravel** propriamente dito, enquanto dentro de **infrastructure** ficam os arquivos de configuração para o nginx dentro do container.
+A pasta **data** será criada como volume para armazenar os arquivos do **MySQL**.
+
+## ENDPOINTS
 ### GET /api/nfe/{accessKey}
 Endpoint responsável por retornar o XML armazenado no banco de dados local tendo como parâmetro a chave de acesso do XML.
 
@@ -39,7 +45,7 @@ Endpoint responsável por retornar o XML armazenado no banco de dados local tend
 Endpoint responsável por enviar a requisição para o serviço da Arquivei e então assim alimentar o banco de dados com as informações.
 
 # Testes unitários
-Para rodar os testes faz-se necessário possuir o **PHP** instalado na máquina para rodar o *PHPUnit* que vem com o Laravel.
+Para rodar os testes faz-se necessário possuir o **PHP** instalado na máquina para rodar o **PHPUnit** que vem com o **Laravel**.
 ```
 php vendor/bin/phpunit
 ```

@@ -25,9 +25,10 @@ class ArquiveiService implements ArquiveiServiceInterface
         return $this->repository->find($accessKey);
     }
 
-    public function feed($url)
+    public function feed()
     {
-        $params = $this->params;
+        $url = $this->params['arquivei']['url'];
+        $params = $this->params['arquivei']['client'];
         $response = $this->client->get($url, $params);
         $content = json_decode($response->getBody());
         $data = $content->data;

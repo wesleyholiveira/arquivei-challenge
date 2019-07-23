@@ -28,7 +28,8 @@ class ArquiveiServiceProvider extends ServiceProvider
         $this->app->bind(ArquiveiServiceInterface::class, function ($app) {
             return new ArquiveiService(
                 $app->make(FiscalNoteRepositoryInterface::class),
-                $app->make(ClientInterface::class)
+                $app->make(ClientInterface::class),
+                config('app.arquivei')
             );
         });
     }

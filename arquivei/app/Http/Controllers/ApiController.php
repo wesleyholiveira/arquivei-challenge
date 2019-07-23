@@ -29,10 +29,7 @@ class ApiController extends Controller
     public function feed()
     {
         try {
-            $url = config('app.arquivei.url');
-            $params = config('app.arquivei.client');
-
-            $response = $this->service->feed($url, $params);
+            $response = $this->service->feed();
             return $this->successfulResponse('The database was feeded with successful', $response);
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);

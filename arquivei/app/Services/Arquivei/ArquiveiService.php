@@ -9,21 +9,25 @@ class ArquiveiService implements ArquiveiServiceInterface
 {
     private $client;
     private $repository;
+    private $params;
 
     public function __construct(
         FiscalNoteRepositoryInterface $repository,
-        ClientInterface $client
+        ClientInterface $client,
+        array $params
     ) {
         $this->client = $client;
         $this->repository = $repository;
+        $this->params = $params;
     }
 
     public function find($accessKey) {
         return $this->repository->find($accessKey);
     }
 
-    public function feed($url, $params)
+    public function feed($url)
     {
+        $params = $this->params;
         $response = $this->client->get($url, $params);
         $content = json_decode($response->getBody());
         $data = $content->data;

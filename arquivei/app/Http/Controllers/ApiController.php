@@ -26,22 +26,13 @@ class ApiController extends Controller
         return $this->successfulResponse('The record was retrieved', $fiscalNote);
     }
 
-    public function feed(Request $request)
+    public function feed()
     {
         try {
-            $url = config('app.arquivei_url');
-            $body = json_decode($request->getContent());
-            $apiKey = $body->key;
-            $apiId = $body->id;
+            $url = config('app.arquivei.url');
+            $params = config('app.arquivei.client');
 
-            $response = $this->service->feed($url, [
-                'headers' => [
-                    'x-api-id' => $apiId,
-                    'x-api-key' => $apiKey,
-                    'Content-Type' => 'application/json'
-                ]
-            ]);
-
+            $response = $this->service->feed($url, $params);
             return $this->successfulResponse('The database was feeded with successful', $response);
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);

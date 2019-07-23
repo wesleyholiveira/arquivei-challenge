@@ -56,8 +56,16 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
     
-    'arquivei_url' => env('ARQUIVEI_URL', 'https://apiuat.arquivei.com.br/v1/nfe/received'),
-
+    'arquivei' => [
+        'url' => env('ARQUIVEI_URL', 'https://apiuat.arquivei.com.br/v1/nfe/received'),
+        'client' => [
+            'headers' => [
+                'x-api-id' => env('API_ID', ''),
+                'x-api-key' => env('API_KEY', ''),
+                'Content-Type' => 'application/json'
+            ]
+        ]
+    ],
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

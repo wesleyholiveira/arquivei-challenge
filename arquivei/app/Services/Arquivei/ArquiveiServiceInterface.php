@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Service\Arquivei;
+namespace App\Services\Arquivei;
 
 interface ArquiveiServiceInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Domain\FiscalNote\Repository;
+namespace App\Domain\FiscalNote\Repository;
 
 interface FiscalNoteRepositoryInterface
 {

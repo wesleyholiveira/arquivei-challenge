@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
-use App\Http\Service\Arquivei\ArquiveiServiceInterface;
+use App\Services\Arquivei\ArquiveiServiceInterface;
 
 class ApiController extends Controller
 {
     private $service;
-    private $repository;
 
     public function __construct(
         ArquiveiServiceInterface $service
@@ -18,32 +15,36 @@ class ApiController extends Controller
         $this->service = $service;
     }
 
-    public function get(Request $request, $accessKey)
+    public function get($accessKey)
     {
         $fiscalNote = $this->service->find($accessKey);
+        if ($fiscalNote->count() < 1) {
+            $message = sprintf('Not found any data with: "%s" content', $accessKey);
+            return $this->errorResponse($message, 404);
+        }
+
         return $this->successfulResponse('The record was retrieved', $fiscalNote);
     }
 
     public function feed(Request $request)
     {
         try {
-            $url = $this->service->url;
+            $url = config('app.arquivei_url');
             $body = json_decode($request->getContent());
             $apiKey = $body->key;
             $apiId = $body->id;
-            $contentType = $request->header('content-type');
 
             $response = $this->service->feed($url, [
                 'headers' => [
                     'x-api-id' => $apiId,
                     'x-api-key' => $apiKey,
-                    'Content-Type' => $contentType
+                    'Content-Type' => 'application/json'
                 ]
             ]);
 
             return $this->successfulResponse('The database was feeded with successful', $response);
         } catch (\Exception $e) {
-            return $this->internalErrorResponse($e->getMessage());
+            return $this->errorResponse($e->getMessage(), 500);
         }
     }
 
@@ -55,10 +56,10 @@ class ApiController extends Controller
         ])->setStatusCode(200);
     }
 
-    private function internalErrorResponse($message)
+    private function errorResponse($message, $statusCode)
     {
         return response()->json([
             'message' => $message
-        ])->setStatusCode(500);
+        ])->setStatusCode(($statusCode));
     }
 }

@@ -1,18 +1,14 @@
 <?php
 
-namespace App\Http\Service\Arquivei;
+namespace App\Services\Arquivei;
 
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\GuzzleException;
-use App\Http\Domain\FiscalNote\Model\FiscalNote;
-use App\Http\Domain\FiscalNote\Repository\FiscalNoteRepositoryInterface;
+use App\Domain\FiscalNote\Repository\FiscalNoteRepositoryInterface;
 
 class ArquiveiService implements ArquiveiServiceInterface
 {
     private $client;
     private $repository;
-
-    public $url;
 
     public function __construct(
         FiscalNoteRepositoryInterface $repository,
@@ -20,7 +16,6 @@ class ArquiveiService implements ArquiveiServiceInterface
     ) {
         $this->client = $client;
         $this->repository = $repository;
-        $this->url = config('app.arquivei_url');
     }
 
     public function find($accessKey) {

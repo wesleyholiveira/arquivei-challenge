@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Domain\FiscalNote\Model;
+namespace App\Domain\FiscalNote\Model;
 
 use Illuminate\Database\Eloquent\Model;
 

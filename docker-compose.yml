@@ -20,6 +20,9 @@ services:
     volumes:
       - ./arquivei:/app
     environment:
+      - API_URL=${API_URL}
+      - API_KEY=${API_KEY}
+      - API_ID=${API_ID}
       - DB_USERNAME=${DB_USERNAME}
       - DB_DATABASE=${DB_DATABASE}
       - DB_PASSWORD=${DB_PASSWORD}

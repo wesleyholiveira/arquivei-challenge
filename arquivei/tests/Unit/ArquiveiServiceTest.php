@@ -4,11 +4,10 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Tests\Fixtures\FiscalNoteFixtures;
-use Illuminate\Database\Eloquent\Collection;
 use Tests\Fixtures\ArquiveiServiceFixtures;
-use App\Domain\FiscalNote\Repository\FiscalNoteRepositoryInterface;
 use App\Services\Arquivei\ArquiveiService;
-use App\Domain\FiscalNote\Model\FiscalNote;
+use App\Domain\FiscalNote\Repository\FiscalNoteRepository;
+use App\Exceptions\FiscalNoteRepositoryException;
 
 class ArquiveiServiceTest extends TestCase
 {
@@ -22,7 +21,7 @@ class ArquiveiServiceTest extends TestCase
     parent::setUp();
 
     $this->client = new \GuzzleHttp\Client();
-    $this->repository = $this->getRepositoryMock();
+    $this->repository = new FiscalNoteRepository();
     $this->params = ArquiveiServiceFixtures::REQUEST;
     $this->service = new ArquiveiService($this->repository, $this->client, $this->params);
   }
@@ -39,21 +38,10 @@ class ArquiveiServiceTest extends TestCase
     $this->assertEquals(0, $expectedCollection->count());
   }
 
-  public function testFeedService()
+  public function testFeedServiceAlreadyExistsRecords()
   {
-    $expectedCollection = $this->service->feed();
-    $this->assertGreaterThan(0, $expectedCollection->count());
-  }
-
-  private function getRepositoryMock()
-  {
-    $model = factory(FiscalNote::class)->make();
-    $expectedCollection = new Collection([$model]);
-    return $this->mock(FiscalNoteRepositoryInterface::class, function($mock) use ($expectedCollection) {
-      $mock->shouldReceive([
-        'find' => $expectedCollection,
-        'save' => $expectedCollection
-      ]);
-    });
+    $this->expectException(FiscalNoteRepositoryException::class);
+    $this->service->feed();
+    $this->assertTrue(true);
   }
 }

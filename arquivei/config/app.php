@@ -57,7 +57,7 @@ return [
     'asset_url' => env('ASSET_URL', null),
     
     'arquivei' => [
-        'url' => env('ARQUIVEI_URL', 'https://apiuat.arquivei.com.br/v1/nfe/received'),
+        'url' => env('API_URL', ''),
         'client' => [
             'headers' => [
                 'x-api-id' => env('API_ID', ''),

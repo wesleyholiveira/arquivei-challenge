@@ -27,21 +27,11 @@ class ArquiveiService implements ArquiveiServiceInterface
 
     public function feed()
     {
-        $url = $this->params['arquivei']['url'];
-        $params = $this->params['arquivei']['client'];
+        $url = $this->params['url'];
+        $params = $this->params['client'];
         $response = $this->client->get($url, $params);
         $content = json_decode($response->getBody());
         $data = $content->data;
         return $this->repository->save($data);
-    }
-
-    public function setParams(array $params)
-    {
-        $this->params = $params;
-    }
-
-    public function getParams(): array
-    {
-        return $this->params;
     }
 }

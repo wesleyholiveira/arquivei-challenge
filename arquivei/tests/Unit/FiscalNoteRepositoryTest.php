@@ -5,7 +5,6 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Tests\Fixtures\FiscalNoteFixtures;
 use App\Domain\FiscalNote\Model\FiscalNote;
-use App\Domain\FiscalNote\Repository\FiscalNoteRepository;
 use Illuminate\Database\Eloquent\Collection;
 use App\Domain\FiscalNote\Repository\FiscalNoteRepositoryInterface;
 
@@ -13,7 +12,8 @@ class FiscalNoteRepositoryTest extends TestCase
 {
   public function testFindFiscalNoteByAccessKeyValid()
   {
-    $expectedCollection = new Collection([new FiscalNote()]);
+    $fiscalNote = factory(FiscalNote::class);
+    $expectedCollection = new Collection([$fiscalNote]);
     $repository = $this->getRepositoryFindMock($expectedCollection);
 
     $actualCollection = $repository->find(FiscalNoteFixtures::ACCESS_KEY['VALID']);
@@ -31,7 +31,7 @@ class FiscalNoteRepositoryTest extends TestCase
 
   public function testSaveFiscalNote()
   {
-    $expectedFiscalNote = new FiscalNote();
+    $expectedFiscalNote = factory(FiscalNote::class);
     $expectedCollection = new Collection([$expectedFiscalNote]);
     $repository = $this->getRepositorySaveMock($expectedFiscalNote, $expectedCollection);
 

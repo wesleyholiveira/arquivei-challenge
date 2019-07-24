@@ -14,7 +14,10 @@ class FiscalNoteRepositoryTest extends TestCase
   {
     $fiscalNote = factory(FiscalNote::class);
     $expectedCollection = new Collection([$fiscalNote]);
-    $repository = $this->getRepositoryFindMock($expectedCollection);
+    $repository = $this->getRepositoryFindMock(
+      $expectedCollection,
+      FiscalNoteFixtures::ACCESS_KEY['VALID']
+    );
 
     $actualCollection = $repository->find(FiscalNoteFixtures::ACCESS_KEY['VALID']);
     $this->assertGreaterThan(0, $actualCollection->count());
@@ -23,7 +26,10 @@ class FiscalNoteRepositoryTest extends TestCase
   public function testFindFiscalNoteByAccessKeyInvalid()
   {
     $expectedCollection = new Collection();
-    $repository = $this->getRepositoryFindMock($expectedCollection);
+    $repository = $this->getRepositoryFindMock(
+      $expectedCollection,
+      FiscalNoteFixtures::ACCESS_KEY['INVALID']
+    );
 
     $actualCollection = $repository->find(FiscalNoteFixtures::ACCESS_KEY['INVALID']);
     $this->assertEquals(0, $actualCollection->count());
@@ -39,12 +45,13 @@ class FiscalNoteRepositoryTest extends TestCase
     $this->assertGreaterThan(0, $actualCollection->count());
   }
 
-  private function getRepositoryFindMock($collection)
+  private function getRepositoryFindMock($collection, $accessKey)
   {
-    $repository = $this->mock(FiscalNoteRepositoryInterface::class, function($mock) use ($collection) {
+    $repository = $this->mock(FiscalNoteRepositoryInterface::class, function ($mock) use ($collection, $accessKey) {
       $mock->shouldReceive('find')
-      ->once()
-      ->andReturn($collection);
+        ->with($accessKey)
+        ->once()
+        ->andReturn($collection);
     });
     return $repository;
   }

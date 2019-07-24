@@ -8,4 +8,9 @@ final class FiscalNoteFixtures
     'VALID' => 'littlelesker',
     'INVALID' => 'asdaoskdaposk'
   ];
+
+  const DATA = [
+    'ACCESS_KEY' => self::ACCESS_KEY['VALID'],
+    'XML' => ''
+  ];
 }

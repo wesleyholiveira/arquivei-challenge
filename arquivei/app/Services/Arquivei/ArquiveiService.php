@@ -32,7 +32,6 @@ class ArquiveiService implements ArquiveiServiceInterface
         $response = $this->client->get($url, $params);
         $content = json_decode($response->getBody());
         $data = $content->data;
-        $this->repository->save($data);
-        return $data;
+        return $this->repository->save($data);
     }
 }

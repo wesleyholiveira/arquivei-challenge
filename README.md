@@ -1,5 +1,6 @@
 # DISCLAIMER
 O projeto foi construido utilizando as seguintes tecnologias e conceitos:
+* Principios SOLID
 * Arquitetura em Camadas
 * Desacoplamento
 * Testes unitários
@@ -19,6 +20,15 @@ docker-compose up
 Estes comandos irão criar a imagem do php-fpm que é a única que eu tive necessidade de personalizar e será também usada pelo container **artisan** para importar a **migration** com o schema que eu criei para armazenar os xmls, e irá rodar os containers de modo que fique anexado ao terminal para analisar possíveis logs.
 
 O arquivo **.env.sample** na raiz do projeto contem as configurações padrões para o projeto, basta renomear para **.env** para que o o docker-compose defina as variáveis de ambiente para os containers.
+
+#### MIGRATIONS
+Para importar as migrations basta ir na raiz do projeto no diretório **arquivei-challenge/infrastructure/scripts/migrate.sh** e passar por parâmetro os dados de conexão com o banco de dados.
+Exemplo:
+```
+./infrastructure/scripts/migrate.sh arquivei root 123mudar
+```
+
+***OBS:*** Apenas rode o comando quando o banco de dados inicializar por completo.
 
 ## APLICAÇÃO
 Ainda na raiz do projeto, no arquivo **.env**, deve-se preencher os campos **API_KEY** e **API_ID** para ter acesso a API da Arquivei.

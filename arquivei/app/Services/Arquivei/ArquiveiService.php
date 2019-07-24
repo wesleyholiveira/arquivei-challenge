@@ -35,6 +35,11 @@ class ArquiveiService implements ArquiveiServiceInterface
         return $this->repository->save($data);
     }
 
+    public function setParams(array $params)
+    {
+        $this->params = $params;
+    }
+
     public function getParams(): array
     {
         return $this->params;

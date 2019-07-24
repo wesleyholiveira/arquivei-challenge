@@ -9,7 +9,6 @@ use Tests\Fixtures\ArquiveiServiceFixtures;
 use App\Domain\FiscalNote\Repository\FiscalNoteRepositoryInterface;
 use App\Services\Arquivei\ArquiveiService;
 use App\Domain\FiscalNote\Model\FiscalNote;
-use App\Domain\FiscalNote\Repository\FiscalNoteRepository;
 
 class ArquiveiServiceTest extends TestCase
 {
@@ -23,7 +22,7 @@ class ArquiveiServiceTest extends TestCase
     parent::setUp();
 
     $this->client = new \GuzzleHttp\Client();
-    $this->repository = new FiscalNoteRepository();
+    $this->repository = $this->getRepositoryMock();
     $this->params = ArquiveiServiceFixtures::REQUEST;
     $this->service = new ArquiveiService($this->repository, $this->client, $this->params);
   }
@@ -54,7 +53,7 @@ class ArquiveiServiceTest extends TestCase
       $mock->shouldReceive([
         'find' => $expectedCollection,
         'save' => $expectedCollection
-      ])->once();
+      ]);
     });
   }
 }

@@ -20,19 +20,6 @@ services:
     volumes:
       - ./arquivei:/app
     environment:
-      - DB_HOST=${DB_HOST}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_DATABASE=${DB_DATABASE}
-      - DB_PASSWORD=${DB_PASSWORD}
-    depends_on:
-      - db
-
-  artisan:
-    image: php-fpm
-    command: php artisan migrate
-    volumes:
-      - ./arquivei:/app
-    environment:
       - DB_USERNAME=${DB_USERNAME}
       - DB_DATABASE=${DB_DATABASE}
       - DB_PASSWORD=${DB_PASSWORD}

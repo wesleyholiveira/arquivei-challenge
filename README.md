@@ -31,7 +31,7 @@ Exemplo:
 ***OBS:*** Apenas rode o comando quando o banco de dados inicializar por completo.
 
 ## APLICAÇÃO
-Ainda na raiz do projeto, no arquivo **.env**, deve-se preencher os campos **API_KEY** e **API_ID** para ter acesso a API da Arquivei.
+Ainda na raiz do projeto, no arquivo **.env**, deve-se preencher os campos **API_URL**, **API_KEY**, **API_ID** para ter acesso a API da Arquivei.
 
 Adicionei também a possibilidade de se configurar a URL do serviço da Arquivei e os parâmetros da requisição, basta acessar o seguinte caminho: **arquivei-challenge/arquivei/config/app.php**, onde na linha *59* até a linha *67* é a seção reservada para tal configuração.
 
@@ -59,3 +59,5 @@ Para rodar os testes basta executar o script criado em **arquivei-challenge/infr
 ```
 ./infrastructure/scripts/tests.sh arquivei root 123mudar
 ```
+
+***OBS:*** Apenas rode o comando quando o banco de dados inicializar por completo.

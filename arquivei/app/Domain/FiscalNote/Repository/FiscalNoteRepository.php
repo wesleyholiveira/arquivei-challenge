@@ -7,14 +7,9 @@ use Illuminate\Database\QueryException;
 
 class FiscalNoteRepository implements FiscalNoteRepositoryInterface
 {
-    public function __construct(FiscalNote $model)
-    {
-        $this->model = $model;
-    }
-
     public function find($accessKey)
     {
-        return $this->model::where('access_key', $accessKey)->get();
+        return FiscalNote::where('access_key', $accessKey)->get();
     }
 
     public function save($data)

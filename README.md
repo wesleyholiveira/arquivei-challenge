@@ -45,9 +45,7 @@ Endpoint responsável por retornar o XML armazenado no banco de dados local tend
 Endpoint responsável por enviar a requisição para o serviço da Arquivei e então assim alimentar o banco de dados com as informações.
 
 # Testes unitários
-Para rodar os testes faz-se necessário possuir o **PHP** instalado na máquina para rodar o **PHPUnit** que vem com o **Laravel**.
+Para rodar os testes basta executar o script criado em **arquivei-challenge/infrastructure/tests.sh** passando como parâmetro os dados de conexão com o banco de dados, segue um exemplo abaixo:
 ```
-php vendor/bin/phpunit
+./infrastructure/scripts/tests.sh arquivei root 123mudar
 ```
-
-O comando acima irá rodar a suite de testes e caso seja do agrado poderá também interagir com o *artisan* para fazer coisas além do que meu container foi projetado.

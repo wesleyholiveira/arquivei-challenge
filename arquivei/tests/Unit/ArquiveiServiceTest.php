@@ -4,66 +4,57 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Tests\Fixtures\FiscalNoteFixtures;
-use App\Domain\FiscalNote\Model\FiscalNote;
 use Illuminate\Database\Eloquent\Collection;
-use App\Services\Arquivei\ArquiveiServiceInterface;
 use Tests\Fixtures\ArquiveiServiceFixtures;
+use App\Domain\FiscalNote\Repository\FiscalNoteRepositoryInterface;
+use App\Services\Arquivei\ArquiveiService;
+use App\Domain\FiscalNote\Model\FiscalNote;
+use App\Domain\FiscalNote\Repository\FiscalNoteRepository;
 
 class ArquiveiServiceTest extends TestCase
 {
+  private $client;
+  private $repository;
+  private $service;
+  private $params;
+
+  protected function setUp(): void
+  {
+    parent::setUp();
+
+    $this->client = new \GuzzleHttp\Client();
+    $this->repository = new FiscalNoteRepository();
+    $this->params = ArquiveiServiceFixtures::REQUEST;
+    $this->service = new ArquiveiService($this->repository, $this->client, $this->params);
+  }
+
   public function testFindServiceWithValidKey()
   {
-    $fiscalNote = factory(FiscalNote::class);
-    $expectedCollection = new Collection([$fiscalNote]);
-
-    $service = $this->getServiceFindMock(
-      $expectedCollection,
-      FiscalNoteFixtures::ACCESS_KEY['VALID']
-    );
-
-    $expectedCollection = $service->find(FiscalNoteFixtures::ACCESS_KEY['VALID']);
+    $expectedCollection = $this->service->find(FiscalNoteFixtures::ACCESS_KEY['VALID']);
     $this->assertGreaterThan(0, $expectedCollection->count());
   }
 
   public function testFindServiceWithInvalidKey()
   {
-    $expectedCollection = new Collection();
-
-    $service = $this->getServiceFindMock(
-      $expectedCollection,
-      FiscalNoteFixtures::ACCESS_KEY['INVALID']
-    );
-
-    $expectedCollection = $service->find(FiscalNoteFixtures::ACCESS_KEY['INVALID']);
+    $expectedCollection = $this->service->find(FiscalNoteFixtures::ACCESS_KEY['INVALID']);
     $this->assertEquals(0, $expectedCollection->count());
   }
 
   public function testFeedService()
   {
-    $expectedData = new \stdClass();
-    $expectedData->access_key = FiscalNoteFixtures::DATA['ACCESS_KEY'];
-    $expectedData->xml = FiscalNoteFixtures::DATA['XML'];
-
-    $service = $this->mock(ArquiveiServiceInterface::class, function($mock) use ($expectedData) {
-      $mock->shouldReceive('feed')
-      ->once()
-      ->andReturn($expectedData);
-    });
-
-    $service->params = ArquiveiServiceFixtures::REQUEST;
-
-    $this->assertEquals(ArquiveiServiceFixtures::REQUEST, $service->params);
-    $this->assertInstanceOf(\stdClass::class, $service->feed());
+    $expectedCollection = $this->service->feed();
+    $this->assertGreaterThan(0, $expectedCollection->count());
   }
 
-  private function getServiceFindMock($collection, $accessKey)
+  private function getRepositoryMock()
   {
-    $service = $this->mock(FiscalNoteserviceInterface::class, function ($mock) use ($collection, $accessKey) {
-      $mock->shouldReceive('find')
-        ->with($accessKey)
-        ->once()
-        ->andReturn($collection);
+    $model = factory(FiscalNote::class)->make();
+    $expectedCollection = new Collection([$model]);
+    return $this->mock(FiscalNoteRepositoryInterface::class, function($mock) use ($expectedCollection) {
+      $mock->shouldReceive([
+        'find' => $expectedCollection,
+        'save' => $expectedCollection
+      ])->once();
     });
-    return $service;
   }
 }

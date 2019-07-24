@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Domain\FiscalNote\Model\FiscalNote;
+use App\Domain\FiscalNote\Model\FiscalNote;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 

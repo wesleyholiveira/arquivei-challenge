@@ -20,6 +20,7 @@ services:
     volumes:
       - ./arquivei:/app
     environment:
+      - DB_HOST=${DB_HOST}
       - DB_USERNAME=${DB_USERNAME}
       - DB_DATABASE=${DB_DATABASE}
       - DB_PASSWORD=${DB_PASSWORD}

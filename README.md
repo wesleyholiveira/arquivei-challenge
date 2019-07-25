@@ -36,6 +36,8 @@ Ainda na raiz do projeto, no arquivo **.env**, deve-se preencher os campos **API
 
 Adicionei também a possibilidade de se configurar a URL do serviço da Arquivei e os parâmetros da requisição, basta acessar o seguinte caminho: **arquivei-challenge/arquivei/config/app.php**, onde na linha *59* até a linha *67* é a seção reservada para tal configuração.
 
+Dentro de **arquivei-challenge/arquivei** deve-se renomear o arquivo **.env.example** para **.env**
+
 ## PROJETO
 O projeto foi desenvolvido de tal forma que isola-se a camada de domínio do usuário, evitando assim que acesse diretamente o domínio. As informações de domínio apenas são acessas através de serviços.
 

@@ -5,6 +5,7 @@ O projeto foi construido utilizando as seguintes tecnologias e conceitos:
 * Desacoplamento
 * Testes unitários
 * PHP 7.3
+* MySQL
 * Laravel Framework
 * Docker
 * Docker-compose
@@ -19,7 +20,7 @@ docker-compose up
 ```
 Estes comandos irão criar a imagem do php-fpm que é a única que eu tive necessidade de personalizar e será também usada pelo container **artisan** para importar a **migration** com o schema que eu criei para armazenar os xmls, e irá rodar os containers de modo que fique anexado ao terminal para analisar possíveis logs.
 
-O arquivo **.env.sample** na raiz do projeto contem as configurações padrões para o projeto, basta renomear para **.env** para que o o docker-compose defina as variáveis de ambiente para os containers.
+O arquivo **.env.example** na raiz do projeto contem as configurações padrões para o projeto, basta renomear para **.env** para que o o docker-compose defina as variáveis de ambiente para os containers.
 
 #### MIGRATIONS
 Para importar as migrations basta ir na raiz do projeto no diretório **arquivei-challenge/infrastructure/scripts/migrate.sh** e passar por parâmetro os dados de conexão com o banco de dados.
